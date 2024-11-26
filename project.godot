@@ -13,6 +13,10 @@ config_version=5
 config/name="Galgalim"
 run/main_scene="res://MainControl.tscn"
 config/features=PackedStringArray("4.3", "Mobile")
+boot_splash/bg_color=Color(0, 0, 0, 1)
+boot_splash/show_image=false
+boot_splash/fullsize=false
+boot_splash/use_filter=false
 config/icon="res://icon.svg"
 
 [display]
@@ -23,3 +27,4 @@ window/size/viewport_height=1612
 [rendering]
 
 renderer/rendering_method="mobile"
+environment/defaults/default_clear_color=Color(0, 0, 0, 1)
