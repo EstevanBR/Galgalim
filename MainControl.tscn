@@ -1,7 +1,7 @@
 [gd_scene load_steps=10 format=3 uid="uid://b46mu2rnu5ko6"]
 
+[ext_resource type="Texture2D" uid="uid://cfsmbcpeee8tf" path="res://Paradiso_Canto_medium.png" id="1_7jxbx"]
 [ext_resource type="Shader" path="res://crt.gdshader" id="1_31ldy"]
-[ext_resource type="Texture2D" uid="uid://bhe7dvkm52vng" path="res://Paradiso_Canto_31.jpg" id="1_dkghf"]
 [ext_resource type="PackedScene" uid="uid://chl24mk3iweci" path="res://main_node_2d.tscn" id="2_w5v0i"]
 [ext_resource type="Script" path="res://letter_selector.gd" id="4_ev6r1"]
 [ext_resource type="Script" path="res://current_word_label.gd" id="4_ij5xp"]
@@ -49,13 +49,10 @@ layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = -810.49
-offset_top = -934.05
-offset_right = 424.51
-offset_bottom = 676.95
 grow_horizontal = 2
 grow_vertical = 2
-texture = ExtResource("1_dkghf")
+texture = ExtResource("1_7jxbx")
+stretch_mode = 5
 
 [node name="SubViewportContainer" type="SubViewportContainer" parent="."]
 layout_mode = 1
@@ -90,7 +87,7 @@ offset_bottom = 88.0
 grow_horizontal = 2
 theme_override_fonts/font = SubResource("SystemFont_5s705")
 theme_override_font_sizes/font_size = 64
-text = "A"
+text = "T"
 horizontal_alignment = 1
 vertical_alignment = 1
 

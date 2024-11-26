@@ -7,7 +7,7 @@ signal letter_selected(letter: String)
 var _current_letter: String = ""
 
 func _input(event: InputEvent) -> void:
-	if (event is InputEventMouseButton and event.is_pressed()) \
+	if (event is InputEventMouseButton and event.is_pressed() and [MOUSE_BUTTON_LEFT, MOUSE_BUTTON_RIGHT, MOUSE_BUTTON_MIDDLE].count(event.button_index)) \
 		or (event is InputEventKey and event.is_pressed()) \
 		or (event is InputEventJoypadButton and event.is_pressed()):
 		letter_selected.emit.call_deferred(_current_letter)

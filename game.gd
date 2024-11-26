@@ -7,7 +7,7 @@ class_name Game
 var words: Array[String] = []
 
 func _ready() -> void:
-	var file := FileAccess.open("res://words_alpha.txt", FileAccess.READ)
+	var file := FileAccess.open("res://five_letter_words.txt", FileAccess.READ)
 	
 	while not file.eof_reached():
 		var line: String = file.get_line().to_lower()
