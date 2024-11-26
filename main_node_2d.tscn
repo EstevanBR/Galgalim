@@ -1,0 +1,15 @@
+[gd_scene load_steps=2 format=3 uid="uid://chl24mk3iweci"]
+
+[ext_resource type="Script" path="res://letter_wheel_2d.gd" id="1_jeadq"]
+
+[node name="MainNode2D" type="Node2D"]
+position = Vector2(400, 400)
+
+[node name="Camera2D" type="Camera2D" parent="."]
+
+[node name="LetterWheel2D" type="Polygon2D" parent="Camera2D"]
+script = ExtResource("1_jeadq")
+degrees_per_second = 22.5
+radius = 512.0
+letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+font_size = 64.0

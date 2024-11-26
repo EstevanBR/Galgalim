@@ -1,0 +1,136 @@
+[gd_scene load_steps=10 format=3 uid="uid://b46mu2rnu5ko6"]
+
+[ext_resource type="Shader" path="res://crt.gdshader" id="1_31ldy"]
+[ext_resource type="Texture2D" uid="uid://bhe7dvkm52vng" path="res://Paradiso_Canto_31.jpg" id="1_dkghf"]
+[ext_resource type="PackedScene" uid="uid://chl24mk3iweci" path="res://main_node_2d.tscn" id="2_w5v0i"]
+[ext_resource type="Script" path="res://letter_selector.gd" id="4_ev6r1"]
+[ext_resource type="Script" path="res://current_word_label.gd" id="4_ij5xp"]
+[ext_resource type="Script" path="res://game.gd" id="6_gc8if"]
+
+[sub_resource type="SystemFont" id="SystemFont_5s705"]
+
+[sub_resource type="SystemFont" id="SystemFont_m5oyd"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_6ym1r"]
+shader = ExtResource("1_31ldy")
+shader_parameter/overlay = false
+shader_parameter/scanlines_opacity = 0.4
+shader_parameter/scanlines_width = 0.25
+shader_parameter/grille_opacity = 0.3
+shader_parameter/resolution = Vector2(620, 806)
+shader_parameter/pixelate = false
+shader_parameter/roll = true
+shader_parameter/roll_speed = 8.0
+shader_parameter/roll_size = 15.0
+shader_parameter/roll_variation = 1.8
+shader_parameter/distort_intensity = 0.05
+shader_parameter/noise_opacity = 0.4
+shader_parameter/noise_speed = 5.0
+shader_parameter/static_noise_intensity = 0.06
+shader_parameter/aberration = 0.01
+shader_parameter/brightness = 1.4
+shader_parameter/discolor = false
+shader_parameter/warp_amount = 0.125
+shader_parameter/clip_warp = false
+shader_parameter/vignette_intensity = 0.4
+shader_parameter/vignette_opacity = 0.5
+
+[node name="Control" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="TextureRect" type="TextureRect" parent="."]
+self_modulate = Color(0.51, 0.51, 0.51, 1)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -810.49
+offset_top = -934.05
+offset_right = 424.51
+offset_bottom = 676.95
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("1_dkghf")
+
+[node name="SubViewportContainer" type="SubViewportContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+stretch = true
+
+[node name="SubViewport" type="SubViewport" parent="SubViewportContainer"]
+transparent_bg = true
+handle_input_locally = false
+size = Vector2i(1240, 1612)
+size_2d_override_stretch = true
+render_target_update_mode = 4
+
+[node name="MainNode2D" parent="SubViewportContainer/SubViewport" instance=ExtResource("2_w5v0i")]
+
+[node name="LetterWheel2D" parent="SubViewportContainer/SubViewport/MainNode2D/Camera2D" index="0"]
+letters = "ABCDEFGHIJKILMNOPQRSTUVWXYZ"
+font_size = 32.0
+
+[node name="CurrentLetterLabel" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -20.0
+offset_right = 20.0
+offset_bottom = 88.0
+grow_horizontal = 2
+theme_override_fonts/font = SubResource("SystemFont_5s705")
+theme_override_font_sizes/font_size = 64
+text = "A"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="CurrentWordLabel" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -88.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_fonts/font = SubResource("SystemFont_m5oyd")
+theme_override_font_sizes/font_size = 64
+text = "_ _ _ _ _"
+horizontal_alignment = 1
+vertical_alignment = 2
+script = ExtResource("4_ij5xp")
+
+[node name="LetterSelector" type="Node" parent="."]
+script = ExtResource("4_ev6r1")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+visible = false
+material = SubResource("ShaderMaterial_6ym1r")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Game" type="Node" parent="." node_paths=PackedStringArray("letter_wheel_2d", "current_word_label")]
+script = ExtResource("6_gc8if")
+letter_wheel_2d = NodePath("../SubViewportContainer/SubViewport/MainNode2D/Camera2D/LetterWheel2D")
+current_word_label = NodePath("../CurrentWordLabel")
+
+[connection signal="current_letter_changed" from="SubViewportContainer/SubViewport/MainNode2D/Camera2D/LetterWheel2D" to="CurrentLetterLabel" method="set_text"]
+[connection signal="current_letter_changed" from="SubViewportContainer/SubViewport/MainNode2D/Camera2D/LetterWheel2D" to="LetterSelector" method="_on_letter_wheel_2d_current_letter_changed"]
+[connection signal="submitted_word" from="CurrentWordLabel" to="Game" method="_on_current_word_label_submitted_word"]
+[connection signal="letter_selected" from="LetterSelector" to="CurrentWordLabel" method="_on_letter_selector_letter_selected"]
+
+[editable path="SubViewportContainer/SubViewport/MainNode2D"]
