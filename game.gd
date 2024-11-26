@@ -3,6 +3,7 @@ class_name Game
 
 @export var letter_wheel_2d: LetterWheel2D
 @export var current_word_label: CurrentWordLabel
+@export var message_label: MessageLabel
 
 var words: Array[String] = []
 
@@ -25,6 +26,7 @@ func submit_word(word: String):
 			Color.GREEN,
 			1.0
 		)
+		message_label.set_message(word.to_upper() + " is a valid word", Color.GREEN)
 	else:
 		print_debug(word, " is not a valid word :(")
 		valid_word = false
@@ -34,6 +36,7 @@ func submit_word(word: String):
 			Color.RED,
 			1.0
 		)
+		message_label.set_message(word.to_upper() + " is not a valid word", Color.RED)
 	
 	var letters: Array[String] = []
 	for letter in letter_wheel_2d.letters:
